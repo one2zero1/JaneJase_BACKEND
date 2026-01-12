@@ -75,6 +75,26 @@ async def init_schema() -> None:
                 picture TEXT,
                 provider VARCHAR(50) NOT NULL,
                 created_at TIMESTAMPTZ DEFAULT NOW()
-            )
+            );
+
+            CREATE TABLE IF NOT EXISTS pose (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                ended_at TIMESTAMPTZ,
+                measurement JSONB NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS pose_detacted (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                pose_id UUID NOT NULL REFERENCES pose(id) ON DELETE CASCADE,
+                occurred_at TIMESTAMPTZ NOT NULL,
+                duration_sec DOUBLE PRECISION NOT NULL,
+                avg_delta_ntsd DOUBLE PRECISION NOT NULL,
+                avg_delta_etsd DOUBLE PRECISION NOT NULL,
+                avg_delta_sld DOUBLE PRECISION NOT NULL,
+                status JSONB NOT NULL,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+            );
         """)
     print("데이터베이스 스키마 초기화 완료")
