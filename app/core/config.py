@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     VERSION: str = "0.1.0"
 
     # 개발: http://localhost:7010 (React)
-    CORS_ORIGINS: list[str] = ["http://localhost:7010", "http://127.0.0.1:7010"]
+    CORS_ORIGINS: list[str] = ["http://localhost:7010", "http://127.0.0.1:7010", "https://jane-jase-frontend.vercel.app"]
 
     # Database connection parameters
     DB_USER: str = USER
